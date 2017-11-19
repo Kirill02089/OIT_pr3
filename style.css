@@ -1,0 +1,35 @@
+#sapper {
+    z-index: 2;
+}
+
+.place {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    border: 1px solid black;
+    background: green;
+}
+
+.cell:hover {
+    cursor: pointer;
+}
+
+.bomb.active {
+    background: red !important;
+}
+
+.flag {
+    background: yellow;
+}
+
+.active {
+    background: grey;
+}
+
+.active:hover {
+    cursor: default;
+}

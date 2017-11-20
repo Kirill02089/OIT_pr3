@@ -1,5 +1,50 @@
-#sapper {
-    z-index: 2;
+.gameData {
+    display: flex;
+    justify-content: center;
+}
+
+.gameInfo {
+    position: absolute;
+    margin: 10px 50px;
+    left: 0;
+    top: 0;
+    background: #adadad;
+}
+
+#bombsNumber .count {
+    color: red;
+}
+
+#flagNumber .count {
+    color: yellow;
+}
+
+#rating {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px 50px;
+    background: #bfb5fc;
+    border: 1px solid black;
+}
+
+#rating > h2 {
+    padding: 10px 15px;
+    margin: 0;
+    border-bottom: 1px solid black;
+}
+
+#play {
+    width: 100%;
+}
+
+form > div {
+    padding: 5px 0;
+}
+
+.gameInfo > div {
+    padding: 10px 20px;
+    border: 1px solid black;
 }
 
 .place {
@@ -32,4 +77,9 @@
 
 .active:hover {
     cursor: default;
+}
+
+#sapper {
+    display: flex;
+    justify-content: center;
 }

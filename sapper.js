@@ -36,12 +36,14 @@ function clearSupper() {
     }
 }
 
-playButton.addEventListener('click', function () {
+playButton.addEventListener('click', function (e) {
     var bombs = +bombsInput.value,
         gameSize = +gameSizeInput.value;
 
     clearSupper();
     Play(bombs, gameSize);
+
+    e.preventDefault();
 });
 
 function Play(bombs, size) {

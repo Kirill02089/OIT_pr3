@@ -6,10 +6,41 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div>
-    <input type="number" id="gameSize" value="">
-    <input type="number" id="bombs" value="">
-    <button id="play" disabled>Play</button>
+<div class="gameData">
+    <form action="">
+        <div>
+            <div>Name:</div>
+            <input type="text" id="name">
+        </div>
+        <div>
+            <div>Size:</div>
+            <input type="number" id="gameSize" value="">
+        </div>
+        <div>
+            <div>Bombs:</div>
+            <input type="number" id="bombs" value="">
+        </div>
+        <div>
+            <button id="play" type="submit" disabled>Play</button>
+        </div>
+    </form>
+</div>
+
+<div class="gameInfo">
+    <div id="bombsNumber">
+        <span>Bombs:</span>
+        <span class="count"></span>
+    </div>
+    <div id="flagNumber">
+        <span>Flags:</span>
+        <span class="count"></span>
+    </div>
+</div>
+
+<div id="rating">
+    <h2>Rating</h2>
+    <ol>
+    </ol>
 </div>
 
 <div id="sapper"></div>

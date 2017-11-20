@@ -2,7 +2,15 @@ var playButton = document.getElementById('play'),
     bombsInput = document.getElementById('bombs'),
     gameSizeInput = document.getElementById('gameSize'),
     sapper = document.getElementById('sapper'),
-    gamePlace = '';
+    gameInfo = {
+        bombsNumber: document.querySelector('#bombsNumber > .count'),
+        flagNumber: document.querySelector('#flagNumber > .count'),
+        timer: document.querySelector('#timer > .count')
+    },
+    gamePlace = '',
+    time = 0,
+    timer,
+    flagCount = 0;
 
 var states = {
     flag: 'flag',
@@ -10,6 +18,9 @@ var states = {
     active: 'active',
     gameOver: 'gameOver'
 };
+
+updateFlagNumber(flagCount);
+gameInfo.bombsNumber.textContent = 0;
 
 bombsInput.onkeyup = function () {
     checkValue()
@@ -37,24 +48,27 @@ function clearSupper() {
 }
 
 playButton.addEventListener('click', function (e) {
+    e.preventDefault();
+
     var bombs = +bombsInput.value,
         gameSize = +gameSizeInput.value;
 
     clearSupper();
+    gameInfo.bombsNumber.textContent = bombs;
+    updateTimer(0);
     Play(bombs, gameSize);
-
-    e.preventDefault();
 });
 
 function Play(bombs, size) {
     var bombsCord = GenerateBombs(bombs, size);
-    console.log(bombsCord)
     DrawGamePlace(size, bombsCord);
+
+    timer = setInterval(Timer, 1000);
 }
 
 function GenerateBombs(bombsNumber, size) {
     bombs = [];
-    bombs.__proto__.containObj = function (obj) {
+    bombs.__proto__.containCord = function (obj) {
         var arr = this,
             contain = false;
 
@@ -71,7 +85,7 @@ function GenerateBombs(bombsNumber, size) {
     for (var i = 0; i < bombsNumber;) {
         var cords = RandomCords(size - 1);
 
-        if (!bombs.containObj(cords)) {
+        if (!bombs.containCord(cords)) {
             bombs.push(cords);
             ++i;
         }
@@ -138,8 +152,10 @@ function SapperEvents(div) {
 
         if (targetClassList.contains(states.flag) || targetClassList.contains(states.active)) {
             targetClassList.remove(states.flag);
+            gameInfo.flagNumber.textContent == 0 ? 0 : --gameInfo.flagNumber.textContent;
         } else {
             targetClassList.add(states.flag);
+            ++gameInfo.flagNumber.textContent;
         }
 
         e.preventDefault();
@@ -164,4 +180,25 @@ function GameOver() {
             cellClass.add(states.active);
         }
     }
+
+    gameInfo.flagNumber.textContent = 0;
+    ClearTimer();
+}
+
+function ClearTimer() {
+    time = 0;
+    clearInterval(timer);
+}
+
+function Timer() {
+    ++time;
+    updateTimer(time);
+}
+
+function updateTimer(timeCount) {
+    gameInfo.timer.textContent = timeCount + 's';
+}
+
+function updateFlagNumber(count) {
+    gameInfo.flagNumber.textContent = count;
 }

@@ -1,4 +1,4 @@
-.gameData {
+.gameData, #game {
     display: flex;
     justify-content: center;
 }
@@ -56,30 +56,27 @@ form > div {
     width: 30px;
     height: 30px;
     border: 1px solid black;
-    background: green;
+    /*background-color: aqua;*/
 }
 
 .cell:hover {
     cursor: pointer;
 }
 
-.bomb.active {
-    background: red !important;
-}
-
-.flag {
-    background: yellow;
-}
-
-.active {
-    background: grey;
-}
-
-.active:hover {
-    cursor: default;
-}
-
 #sapper {
     display: flex;
     justify-content: center;
+}
+
+.item-1{
+    background-color: red;
+}
+.item-2{
+    background-color: blue;
+}
+.item-3{
+    background-color: yellow;
+}
+.item-4{
+    background-color: green;
 }

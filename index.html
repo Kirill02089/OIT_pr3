@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 <div class="gameData">
@@ -13,30 +14,18 @@
             <input type="text" id="name">
         </div>
         <div>
-            <div>Size:</div>
-            <input type="number" id="gameSize" value="">
-        </div>
-        <div>
-            <div>Bombs:</div>
-            <input type="number" id="bombs" value="">
-        </div>
-        <div>
-            <button id="play" type="submit" disabled>Play</button>
+            <button id="play" type="submit">Play</button>
         </div>
     </form>
 </div>
 
 <div class="gameInfo">
-    <div id="bombsNumber">
-        <span>Bombs:</span>
-        <span class="count"></span>
-    </div>
-    <div id="flagNumber">
-        <span>Flags:</span>
-        <span class="count"></span>
-    </div>
     <div id="timer">
         <span>Time:</span>
+        <span class="count"></span>
+    </div>
+    <div id="score">
+        <span>Score:</span>
         <span class="count"></span>
     </div>
 </div>
@@ -47,8 +36,9 @@
     </ol>
 </div>
 
-<div id="sapper"></div>
+<div id="game"></div>
 
-<script src="sapper.js"></script>
+<script src="lib/require.js"></script>
+<script src="index.js"></script>
 </body>
 </html>

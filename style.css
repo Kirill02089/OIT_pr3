@@ -3,6 +3,10 @@
     justify-content: center;
 }
 
+#game {
+    margin-top: 50px;
+}
+
 .gameInfo {
     position: absolute;
     margin: 10px 50px;
@@ -56,7 +60,9 @@ form > div {
     width: 30px;
     height: 30px;
     border: 1px solid black;
-    /*background-color: aqua;*/
+    z-index: 1;
+    border-radius: 20px;
+    margin: 1px;
 }
 
 .cell:hover {
@@ -68,15 +74,55 @@ form > div {
     justify-content: center;
 }
 
-.item-1{
+.item-1 {
     background-color: red;
 }
-.item-2{
+
+.item-2 {
     background-color: blue;
 }
-.item-3{
+
+.item-3 {
     background-color: yellow;
 }
-.item-4{
+
+.item-4 {
     background-color: green;
+}
+
+.item-0 {
+    animation: empty 1s ease-out 1;
+    background-color: black;
+}
+
+.active {
+    outline: 5px dashed black;
+    z-index: 2;
+    animation: pulseOutline 1s ease-in-out infinite alternate;
+}
+
+.disable {
+
+}
+
+@keyframes pulseOutline {
+    0% {
+        outline-offset: -5px;
+    }
+    100% {
+        outline-offset: 0px;
+    }
+}
+
+@keyframes empty {
+    0%{
+        background-color: white;
+        z-index: 2;
+    }
+    100% {
+        margin: 6px;
+        width: 20px;
+        height: 20px;
+        background-color: black;
+    }
 }

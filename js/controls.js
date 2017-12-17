@@ -9,7 +9,6 @@ define(function (require) {
                 return
             }
 
-            // action && elem.classList.contains(elemClass) && elemClass.classList.remove(elemClass);
             action ? elem.classList.add(elemClass) : elem.classList.remove(elemClass);
         },
         playEvent: function () {

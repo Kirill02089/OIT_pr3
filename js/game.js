@@ -31,19 +31,18 @@ define(function (require) {
             updateArr(changesArr);
 
             function updateArr(changes) {
-                logService.updateScore(changes.length);
-
                 var type = 0;
 
                 if (logService.isGameOver()) {
                     changes = self.gameOverArr();
                     type = 13;
+                } else {
+                    logService.updateScore(changes.length);
                 }
 
                 changes.forEach(function (change) {
                     resultCells[change.ii][change.jj].type = type;
                 });
-
             }
 
             return resultCells;

@@ -3,7 +3,9 @@ define(function (require) {
         removeCells: function (cells) {
             var newCells = require('./drawer').virtualBox,
                 resultCells = Object.assign([], cells),
-                changesArr = [];
+                logService = require('./log.service'),
+                changesArr = [],
+                self = this;
 
             for (var i = 0; i < newCells.length; ++i) {
                 for (var j = 0; j < newCells[i].length; ++j) {
@@ -18,8 +20,8 @@ define(function (require) {
 
                     if (this.isWin(winningCells.horizontal) || this.isWin(winningCells.vertical)) {
                         changesArr.push({
-                            i: i,
-                            j: j
+                            ii: i,
+                            jj: j
                         })
                     }
 
@@ -29,18 +31,45 @@ define(function (require) {
             updateArr(changesArr);
 
             function updateArr(changes) {
+                logService.updateScore(changes.length);
+
+                var type = 0;
+
+                if (logService.isGameOver()) {
+                    changes = self.gameOverArr();
+                    type = 13;
+                }
+
                 changes.forEach(function (change) {
-                    resultCells[change.i][change.j].type = 0;
-                })
+                    resultCells[change.ii][change.jj].type = type;
+                });
+
             }
 
             return resultCells;
         },
-        removeCell: function () {
+        gameOverArr: function () {
+            var arr = require('./drawer').virtualBox,
+                finalArr = [];
 
+            finalArr = arr.reduce(function (prevRow, currentRow) {
+                var rowArr = currentRow.map(function (cell) {
+                    var cellIds = cell.parseIndex();
+
+                    return {
+                        ii: cellIds[0],
+                        jj: cellIds[1]
+                    }
+                });
+
+                return prevRow.concat(rowArr);
+            }, arr[0]);
+
+            return finalArr.slice(arr[0].length, this.length);
         },
         findWinner: function (i, j) {
             var cells = require('./drawer').virtualBox,
+                logService = require('./log.service'),
                 self = this;
 
             if (i === undefined && j === undefined) {
@@ -143,6 +172,10 @@ define(function (require) {
             }
 
             function checkOnWin() {
+                if (logService.isGameOver()) {
+                    return false;
+                }
+
                 for (var ti = 0; ti < cells.length; ++ti) {
                     for (var tj = 0; tj < cells[ti].length; ++tj) {
                         var checkingCell = self.findWinner(ti, tj);
@@ -183,6 +216,47 @@ define(function (require) {
         },
         isWin: function (a) {
             return a >= 3;
+        },
+        swapCells: function (first, second) {
+            var drawer = require('./drawer'),
+                elements = require('./elements'),
+                result = false;
+
+            if (typeof first === 'undefined' || first === '') {
+                return;
+            }
+
+            var firstCell = elements.getCellByIdFromArr(first),
+                secondCell = elements.getCellByIdFromArr(second),
+                copyFirstCell = Object.assign({}, firstCell);
+
+            if (this.swapIsPossible(firstCell, secondCell)) {
+                Object.assign(firstCell, secondCell);
+                Object.assign(secondCell, copyFirstCell);
+                secondCell.index = firstCell.index;
+                firstCell.index = copyFirstCell.index;
+                drawer.render();
+                result = true;
+            }
+
+            return result;
+        },
+        swapIsPossible: function (first, second) {
+            var firstIds = first.parseIndex(),
+                secondIds = second.parseIndex();
+
+            return firstIds.reduce(function (prev1, current1) {
+                return secondIds.reduce(function (prev2, current2) {
+                    return check(prev1 - prev2, current1 - current2);
+                })
+            });
+
+            function check(a, b) {
+                a = Math.abs(a);
+                b = Math.abs(b);
+
+                return ((a > -1 && a < 2) && !b) || ((b > -1 && b < 2) && !a)
+            }
         }
     }
 });

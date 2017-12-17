@@ -17,13 +17,6 @@ define(function (require) {
                 this.virtualBox.push(row);
             }
 
-            var arr = [
-                [elements.Cell('0_0', 1),elements.Cell('0_1', 2), elements.Cell('0_2', 1), elements.Cell('0_3', 2), elements.Cell('0_4', 2)],
-                [elements.Cell('1_0', 3),elements.Cell('1_1', 2), elements.Cell('1_2', 1), elements.Cell('1_3', 2), elements.Cell('1_4', 2)],
-                [elements.Cell('2_0', 2),elements.Cell('2_1', 1), elements.Cell('2_2', 1), elements.Cell('2_3', 1), elements.Cell('2_4', 2)],
-                [elements.Cell('3_0', 1),elements.Cell('3_1', 3), elements.Cell('3_2', 3), elements.Cell('3_3', 3), elements.Cell('3_4', 3)],
-                [elements.Cell('4_0', 1),elements.Cell('4_1', 1), elements.Cell('4_2', 1), elements.Cell('4_3', 3), elements.Cell('4_4', 2)]
-            ];
             this.render();
         },
         render: function (arr) {
@@ -64,7 +57,6 @@ define(function (require) {
                             vCell.classList.remove(vCell.classList[1]);
                         }
                         vCell.classList.add('item-' + cellType);
-                        vCell.setAttribute('id', cells[i][j].index)
                     }
                 }
             }

@@ -11,10 +11,10 @@
     <form action="">
         <div>
             <div>Name:</div>
-            <input type="text" id="name">
+            <input type="text" id="userName">
         </div>
         <div>
-            <button id="play" type="submit">Play</button>
+            <button id="play" type="button">Play</button>
         </div>
     </form>
 </div>
@@ -22,18 +22,26 @@
 <div class="gameInfo">
     <div id="timer">
         <span>Time:</span>
-        <span class="count"></span>
+        <span class="count">75s</span>
     </div>
     <div id="score">
         <span>Score:</span>
-        <span class="count"></span>
+        <span class="count">0</span>
     </div>
 </div>
 
 <div id="rating">
-    <h2>Rating</h2>
-    <ol>
-    </ol>
+    <table>
+        <thead>
+        <tr>
+            <td><b>Name</b></td>
+            <td><b>Score</b></td>
+        </tr>
+        </thead>
+        <tbody class="list">
+
+        </tbody>
+    </table>
 </div>
 
 <div id="game">

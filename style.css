@@ -91,8 +91,11 @@ form > div {
 }
 
 .item-0 {
-    animation: empty 1s ease-out 1;
-    background-color: black;
+    animation: empty1 1s ease-out 1;
+}
+
+.item-13 {
+    animation: empty1 1s ease-out 1;
 }
 
 .active {
@@ -101,8 +104,9 @@ form > div {
     animation: pulseOutline 1s ease-in-out infinite alternate;
 }
 
-.disable {
 
+table td {
+    padding: 10px;
 }
 
 @keyframes pulseOutline {
@@ -110,13 +114,12 @@ form > div {
         outline-offset: -5px;
     }
     100% {
-        outline-offset: 0px;
+        outline-offset: 0;
     }
 }
 
-@keyframes empty {
+@keyframes empty1 {
     0%{
-        background-color: white;
         z-index: 2;
     }
     100% {
@@ -124,5 +127,6 @@ form > div {
         width: 20px;
         height: 20px;
         background-color: black;
+
     }
 }

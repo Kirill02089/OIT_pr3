@@ -1,19 +1,63 @@
 define(function (require) {
     return {
         bindEvents: function () {
+            this.activateCellEvent();
+            this.playEvent();
+        },
+        classToDo: function (elem, elemClass, action) {
+            if (elem === null) {
+                return
+            }
+
+            action ? elem.classList.add(elemClass) : elem.classList.remove(elemClass);
+        },
+        playEvent: function () {
+            var drawer = require('./drawer'),
+                logService = require('./log.service'),
+                elements = require('./elements'),
+                self = this;
+
+            elements.playButton.addEventListener('click', function () {
+                drawer.draw(10, 10);
+                self.render2();
+                logService.startTimer();
+            });
+
+        },
+        render2: function () {
+            setTimeout(renderAfterOffset, 200);
+
+            function renderAfterOffset() {
+                var drawer = require('./drawer'),
+                    game = require('./game');
+
+                newCells = game.removeCells(drawer.virtualBox);
+                drawer.render(newCells);
+                offsetCells = game.offset(newCells);
+                setTimeout(() => drawer.render(offsetCells), 1000);
+                newCells = offsetCells;
+
+                if (game.findWinner()) {
+                    setTimeout(renderAfterOffset, 1500);
+                }
+            }
+        },
+        activateCellEvent: function () {
             var elements = require('./elements'),
-                target = '',
+                game = require('./game'),
+                currentCellId = '',
+                target = {},
                 self = this,
                 cell;
 
             animations = {
-                'active': 'active',
-                'disable': 'disable'
+                'active': 'active'
             };
 
             elements.innerPlace.addEventListener('click', function (event) {
                 target = event.target;
                 cell = elements.getCellByIdFromArr(target.getAttribute('id'));
+                currentCellId = cell.index;
 
                 if (!cell) {
                     return;
@@ -21,25 +65,38 @@ define(function (require) {
 
                 cell.isActive = !cell.isActive;
                 if (cell.isActive) {
-                    self.classToDo(target, animations.active, true);
-                    if (cell.index !== elements.activeCell) {
-                        self.classToDo(elements.getCellById(elements.activeCell), animations.active, false);
+                    activate(target);
+
+                    var prevCellOnHtml = elements.getCellById(elements.activeCell),
+                        currentCellOnHtml = elements.getCellById(cell.index);
+
+                    if (cell.index !== elements.activeCell && game.swapCells(elements.activeCell, cell.index)) {
+                        disable(prevCellOnHtml, true);
+                        disable(currentCellOnHtml, true);
+                        currentCellId = '';
+                        self.render2();
+                    } else {
+                        prevCellOnHtml !== null && disable(prevCellOnHtml, true);
                     }
                 } else {
-                    target.classList.remove(animations.active);
+                    disable(target);
+                    currentCellId = '';
                 }
 
-                elements.activeCell = cell.index;
-            })
-        },
-        classToDo: function (elem, elemClass, action) {
-            if (elem === null) {
-                return
+                elements.activeCell = currentCellId;
+            });
+
+            function activate(item) {
+                self.classToDo(item, animations.active, true);
             }
-            if (action) {
-                elem.classList.add(elemClass);
-            } else {
-                elem.classList.remove(elemClass);
+            function disable(item, depth) {
+                self.classToDo(item, animations.active, false);
+                if (depth) {
+                    var id = item.getAttribute('id'),
+                        vCell = elements.getCellByIdFromArr(id);
+
+                    vCell.isActive = false;
+                }
             }
         }
     }

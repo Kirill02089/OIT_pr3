@@ -9,6 +9,7 @@ define(function (require) {
                 return
             }
 
+            // action && elem.classList.contains(elemClass) && elemClass.classList.remove(elemClass);
             action ? elem.classList.add(elemClass) : elem.classList.remove(elemClass);
         },
         playEvent: function () {
@@ -51,7 +52,8 @@ define(function (require) {
                 cell;
 
             animations = {
-                'active': 'active'
+                'active': 'active',
+                'disable': 'disable'
             };
 
             elements.innerPlace.addEventListener('click', function (event) {
@@ -74,7 +76,12 @@ define(function (require) {
                         disable(prevCellOnHtml, true);
                         disable(currentCellOnHtml, true);
                         currentCellId = '';
-                        self.render2();
+                        if (game.findWinner()) {
+                            self.render2();
+                        } else {
+                            game.swapCells(elements.activeCell, cell.index);
+                            error(currentCellOnHtml);
+                        }
                     } else {
                         prevCellOnHtml !== null && disable(prevCellOnHtml, true);
                     }
@@ -97,6 +104,13 @@ define(function (require) {
 
                     vCell.isActive = false;
                 }
+            }
+
+            function error(item) {
+                self.classToDo(item, animations.disable, true);
+                setTimeout(function () {
+                    self.classToDo(item, animations.disable, false);
+                }, 500)
             }
         }
     }

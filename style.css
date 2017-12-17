@@ -104,6 +104,9 @@ form > div {
     animation: pulseOutline 1s ease-in-out infinite alternate;
 }
 
+.disable {
+    animation: error 0.4s linear 1;
+}
 
 table td {
     padding: 10px;
@@ -119,7 +122,7 @@ table td {
 }
 
 @keyframes empty1 {
-    0%{
+    0% {
         z-index: 2;
     }
     100% {
@@ -127,6 +130,14 @@ table td {
         width: 20px;
         height: 20px;
         background-color: black;
+    }
+}
 
+@keyframes error {
+    0% {
+        z-index: 2;
+    }
+    100% {
+        background-color: black;
     }
 }
